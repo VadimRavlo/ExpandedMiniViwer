@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+//        final android.support.v7.app.ActionBar bar = getSupportActionBar();
+
         intentService = new Intent(Constants.ACTION_RUN_MAIN_SERVICE);
         serviceConnection = new MainServiceConnection(this);
 
