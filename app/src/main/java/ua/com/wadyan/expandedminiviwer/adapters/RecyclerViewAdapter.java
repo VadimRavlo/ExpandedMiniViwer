@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import ua.com.wadyan.expandedminiviwer.R;
 
 /**
@@ -12,10 +14,10 @@ import ua.com.wadyan.expandedminiviwer.R;
  */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
-    private String[] dataSet;
+    private ArrayList<Object> dataSet;
     private int pageNumber;
 
-    public RecyclerViewAdapter(String[] dataSet, int pageNumber) {
+    public RecyclerViewAdapter(ArrayList<Object> dataSet, int pageNumber) {
         this.dataSet = dataSet;
         this.pageNumber = pageNumber;
     }
@@ -74,7 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return dataSet.length;
+        return dataSet.size();
     }
 
 

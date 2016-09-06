@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import ua.com.wadyan.expandedminiviwer.Constants;
@@ -49,12 +51,15 @@ public class PageFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-//        rvLayoutManager = new LinearLayoutManager(getActivity());
         rvLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(rvLayoutManager);
 
-        rvAdapter = new RecyclerViewAdapter(getDataSet(), pageNumber);
+        ArrayList<Object> objectsList = getDataSet();
+        rvAdapter = new RecyclerViewAdapter(objectsList, pageNumber);
         recyclerView.setAdapter(rvAdapter);
+
+//        objectsList.add(new Object());
+//        rvAdapter = new RecyclerViewAdapter(objectsList, pageNumber);
 
         TextView tvPage = (TextView) view.findViewById(R.id.tv_page);
         switch (pageNumber){
@@ -75,10 +80,10 @@ public class PageFragment extends Fragment {
         return view;
     }
 
-    String[] getDataSet(){
-        String[] dataSet = new String[100];
-        for (int i = 0; i < 100; i++) {
-            dataSet[i] = "#" + i;
+    ArrayList<Object> getDataSet(){
+        ArrayList<Object> dataSet = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            dataSet.add(new Object());
         }
         return dataSet;
     }
