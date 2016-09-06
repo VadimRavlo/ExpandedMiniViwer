@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Expanded MiniViwer</string>
+    <string name="subtitle_page_all_views">All views of application</string>
+    <string name="subtitle_page_images">All ImageViews of application</string>
+    <string name="subtitle_page_videos">All VideoViews of application</string>
+    <string name="search">Search</string>
+    <string name="load_startandroid_ru">Load Startandroid.ru</string>
 </resources>

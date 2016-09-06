@@ -4,11 +4,11 @@
     <item
         android:id="@+id/action_search"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Search"
+        android:title="@string/search"
         app:showAsAction="always"/>
     <item
         android:id="@+id/load_startandroid"
-        android:title="Load Startandroid.ru"
+        android:title="@string/load_startandroid_ru"
         android:icon="@android:drawable/ic_media_play"
         app:showAsAction="always"/>
 </menu>
