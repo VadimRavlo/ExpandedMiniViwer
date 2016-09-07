@@ -10,4 +10,7 @@ public class Constants {
     public static String PARAM_SERVICE_RESULT_ACTIVITY = "serviceResultActivite";
     public static final String ARG_PAGE_NUMBER = "arg_page_number";
     public static final int PAGE_COUNT = 3;
+    public static final int TAB_ALL = 0;
+    public static final int TAB_IMAGES = 1;
+    public static final int TAB_VIDEOS = 2;
 }

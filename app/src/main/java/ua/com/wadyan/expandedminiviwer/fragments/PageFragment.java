@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,22 +55,20 @@ public class PageFragment extends Fragment {
         rvLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(rvLayoutManager);
 
-        ArrayList<Object> objectsList = getDataSet();
-        rvAdapter = new RecyclerViewAdapter(objectsList, pageNumber);
+        rvAdapter = new RecyclerViewAdapter(getDataSet(pageNumber), pageNumber);
         recyclerView.setAdapter(rvAdapter);
 
-//        objectsList.add(new Object());
-//        rvAdapter = new RecyclerViewAdapter(objectsList, pageNumber);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         TextView tvPage = (TextView) view.findViewById(R.id.tv_page);
         switch (pageNumber){
-            case 0:
+            case Constants.TAB_ALL:
                 tvPage.setText(R.string.subtitle_page_all_views);
                 break;
-            case 1:
+            case Constants.TAB_IMAGES:
                 tvPage.setText(R.string.subtitle_page_images);
                 break;
-            case 2:
+            case Constants.TAB_VIDEOS:
                 tvPage.setText(R.string.subtitle_page_videos);
                 break;
             default:
@@ -80,9 +79,24 @@ public class PageFragment extends Fragment {
         return view;
     }
 
-    ArrayList<Object> getDataSet(){
+    //TODO
+    ArrayList<Object> getDataSet(int pageNumber){
         ArrayList<Object> dataSet = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        int objectsCount = 0;
+        switch (pageNumber){
+            case Constants.TAB_ALL:
+                objectsCount = 98;
+                break;
+            case Constants.TAB_IMAGES:
+                objectsCount = 89;
+                break;
+            case Constants.TAB_VIDEOS:
+                objectsCount = 9;
+                break;
+            default:
+                break;
+        }
+        for (int i = 0; i < objectsCount; i++) {
             dataSet.add(new Object());
         }
         return dataSet;
