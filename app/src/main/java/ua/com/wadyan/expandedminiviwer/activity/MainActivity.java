@@ -33,11 +33,10 @@ public class MainActivity extends AppCompatActivity {
     private Intent intentService;
     private boolean bound = false;
     private MainService service;
+    @Bind(R.id.view_pager_main) ViewPager viewPager;
 
-    @Bind(R.id.view_pager_main) ViewPager mainViewPager;
-
-    public ViewPager getMainViewPager() {
-        return mainViewPager;
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 
     public MainService getService() {

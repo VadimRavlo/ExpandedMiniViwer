@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import ua.com.wadyan.expandedminiviwer.Constants;
 import ua.com.wadyan.expandedminiviwer.R;
-import ua.com.wadyan.expandedminiviwer.asynctasks.AddViewAsyncTask;
+import ua.com.wadyan.expandedminiviwer.asynctasks.AsyncTaskAddView;
 
 /**
  * Created by << Wad + >> on 06.09.2016.
@@ -20,7 +20,7 @@ import ua.com.wadyan.expandedminiviwer.asynctasks.AddViewAsyncTask;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private ArrayList<Object> dataSet;
     private int pageNumber;
-    private AddViewAsyncTask addViewAsyncTask;
+    private AsyncTaskAddView asyncTaskAddView;
 
     public RecyclerViewAdapter(ArrayList<Object> dataSet, int pageNumber) {
         this.dataSet = dataSet;
@@ -32,6 +32,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         switch (pageNumber){
             case Constants.TAB_ALL:
                 addedObjectCount = 2;
+                asyncTaskAddView = new AsyncTaskAddView(this, dataSet);
+                asyncTaskAddView.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
             case Constants.TAB_IMAGES:
                 addedObjectCount = 1;
@@ -45,6 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         for (int i = 0; i < addedObjectCount; i++) {
             dataSet.add(new Object());
         }
+
     }
 
     @Override
@@ -88,13 +91,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
                 s = "el.";
                 holder.imageView.setImageResource(android.R.drawable.star_big_off);
                 Log.d(Constants.LOG_TAG, "onBindViewHolder AllTab");
-
-                if (position == 0) {
-                    //TODO
-
-                    addViewAsyncTask = new AddViewAsyncTask(this);
-                    addViewAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
                 break;
             case Constants.TAB_IMAGES:
                 s = "img.";

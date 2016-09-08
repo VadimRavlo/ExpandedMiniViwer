@@ -55,7 +55,7 @@ public class PageFragment extends Fragment {
         rvLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(rvLayoutManager);
 
-        rvAdapter = new RecyclerViewAdapter(getDataSet(pageNumber), pageNumber);
+        rvAdapter = new RecyclerViewAdapter(getDataSet(), pageNumber);
         recyclerView.setAdapter(rvAdapter);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -80,7 +80,7 @@ public class PageFragment extends Fragment {
     }
 
     //TODO
-    ArrayList<Object> getDataSet(int pageNumber){
+    ArrayList<Object> getDataSet(){
         ArrayList<Object> dataSet = new ArrayList<>();
         int objectsCount = 0;
         switch (pageNumber){

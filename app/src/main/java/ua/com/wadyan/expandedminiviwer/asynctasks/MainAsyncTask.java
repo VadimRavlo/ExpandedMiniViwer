@@ -57,8 +57,6 @@ public class MainAsyncTask extends AsyncTask<Void, Void, Void> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
         if(activity != null){
-//            activity.mainViewPager.addView(new TextView(activity));
-//            Log.d(Constants.LOG_TAG, "TextView added");
         }
     }
 }
