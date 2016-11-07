@@ -15,8 +15,8 @@ import butterknife.ButterKnife;
 import ua.com.wadyan.expandedminiviwer.Constants;
 import ua.com.wadyan.expandedminiviwer.R;
 import ua.com.wadyan.expandedminiviwer.asynctasks.AccessServiceFromActivityAsyncTask;
-import ua.com.wadyan.expandedminiviwer.asynctasks.AccessToLearnandroidAsyncTask;
-import ua.com.wadyan.expandedminiviwer.asynctasks.MainAsyncTask;
+import ua.com.wadyan.expandedminiviwer.asynctasks.GetAccessToLearnandroid;
+import ua.com.wadyan.expandedminiviwer.asynctasks.FillDatabaseURL;
 import ua.com.wadyan.expandedminiviwer.service.MainService;
 import ua.com.wadyan.expandedminiviwer.service.MainServiceConnection;
 import ua.com.wadyan.expandedminiviwer.utils.ViewPagerUtils;
@@ -26,9 +26,9 @@ import ua.com.wadyan.expandedminiviwer.utils.ViewPagerUtils;
  */
 
 public class MainActivity extends AppCompatActivity {
-    private MainAsyncTask mainAsyncTask;
+    private FillDatabaseURL fillDatabaseURL;
     private AccessServiceFromActivityAsyncTask accessServiceFromActivityAsyncTask;
-    private AccessToLearnandroidAsyncTask accessToLearnandroidAsyncTask;
+    private GetAccessToLearnandroid getAccessToLearnandroid;
     private MainServiceConnection serviceConnection;
     private Intent intentService;
     private boolean bound = false;
@@ -76,18 +76,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.load_startandroid:
-                accessToLearnandroidAsyncTask = new AccessToLearnandroidAsyncTask(this);
-                accessToLearnandroidAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     @Override
     protected void onStart() {
@@ -98,23 +87,39 @@ public class MainActivity extends AppCompatActivity {
         accessServiceFromActivityAsyncTask = new AccessServiceFromActivityAsyncTask(this);
         accessServiceFromActivityAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        getMainAsyncTaskObject();
+        getFillDatabaseURLObject();
     }
 
-    void getMainAsyncTaskObject(){
-        mainAsyncTask =(MainAsyncTask) getLastCustomNonConfigurationInstance();
-        if (mainAsyncTask == null) {
-            mainAsyncTask = new MainAsyncTask();
-            mainAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    void getFillDatabaseURLObject(){
+        Log.d(Constants.LOG_TAG, "MainActivity - Create or get fillDatabaseURL");
+        fillDatabaseURL =(FillDatabaseURL) getLastCustomNonConfigurationInstance();
+        if (fillDatabaseURL == null) {
+            fillDatabaseURL = new FillDatabaseURL();
+            fillDatabaseURL.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        mainAsyncTask.linkToActivity(this);
-        Log.d(Constants.LOG_TAG, "Create or get mainAsyncTask");
+        fillDatabaseURL.linkToActivity(this);
     }
 
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
-        mainAsyncTask.unLinkFromActivity();
-        return mainAsyncTask;
+        fillDatabaseURL.unLinkFromActivity();
+        return fillDatabaseURL;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.load_startandroid:
+                getAccessToLearnandroid = new GetAccessToLearnandroid(this);
+                getAccessToLearnandroid.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                break;
+            case R.id.action_search:
+                Toast.makeText(this, "Searching in progress", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -129,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        ButterKnife.unbind(this);
 
         stopService(intentService);
         Toast.makeText(this, "Goodbye amigo !!!", Toast.LENGTH_SHORT).show();

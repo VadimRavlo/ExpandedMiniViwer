@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 import ua.com.wadyan.expandedminiviwer.Constants;
@@ -55,7 +53,7 @@ public class PageFragment extends Fragment {
         rvLayoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(rvLayoutManager);
 
-        rvAdapter = new RecyclerViewAdapter(getDataSet(), pageNumber);
+        rvAdapter = new RecyclerViewAdapter(this, getDataSet(), pageNumber);
         recyclerView.setAdapter(rvAdapter);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -89,6 +87,7 @@ public class PageFragment extends Fragment {
                 break;
             case Constants.TAB_IMAGES:
                 objectsCount = 89;
+                //                fillImagesDB(); //TODO
                 break;
             case Constants.TAB_VIDEOS:
                 objectsCount = 9;
@@ -96,9 +95,14 @@ public class PageFragment extends Fragment {
             default:
                 break;
         }
+
+
         for (int i = 0; i < objectsCount; i++) {
             dataSet.add(new Object());
         }
         return dataSet;
+
     }
+
+
 }

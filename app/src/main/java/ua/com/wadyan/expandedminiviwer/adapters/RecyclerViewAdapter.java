@@ -1,6 +1,7 @@
 package ua.com.wadyan.expandedminiviwer.adapters;
 
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,18 +12,21 @@ import java.util.ArrayList;
 
 import ua.com.wadyan.expandedminiviwer.Constants;
 import ua.com.wadyan.expandedminiviwer.R;
-import ua.com.wadyan.expandedminiviwer.asynctasks.AsyncTaskAddView;
+import ua.com.wadyan.expandedminiviwer.asynctasks.AsyncTaskDeleteView;
+import ua.com.wadyan.expandedminiviwer.utils.ImageLoader;
 
 /**
  * Created by << Wad + >> on 06.09.2016.
  */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
+    private Fragment fragment;
     private ArrayList<Object> dataSet;
-    private int pageNumber;
-    private AsyncTaskAddView asyncTaskAddView;
+    private int pageNumber; //TODO
+    private AsyncTaskDeleteView asyncTaskAddView;
 
-    public RecyclerViewAdapter(ArrayList<Object> dataSet, int pageNumber) {
+    public RecyclerViewAdapter(Fragment fragment, ArrayList<Object> dataSet, int pageNumber) {
+        this.fragment = fragment;
         this.dataSet = dataSet;
         this.pageNumber = pageNumber;
 
@@ -32,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         switch (pageNumber){
             case Constants.TAB_ALL:
                 addedObjectCount = 2;
-                asyncTaskAddView = new AsyncTaskAddView(this, dataSet);
+                asyncTaskAddView = new AsyncTaskDeleteView(this, dataSet);
                 asyncTaskAddView.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
             case Constants.TAB_IMAGES:
@@ -74,10 +78,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         return new ViewHolder(v);
     }
 
-    int getMyLayoutResource(){   //TODO
-        int resource = 0;
-
-        resource = R.layout.grid_item_image_box;
+    private int getMyLayoutResource(){   //TODO
+        int resource =  R.layout.grid_item_image_box;
 
         return resource;
     }
@@ -86,10 +88,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         Object object = dataSet.get(position);
         String s = "";
+        String imageURL;
         switch (pageNumber){
             case Constants.TAB_ALL:
                 s = "el.";
-                holder.imageView.setImageResource(android.R.drawable.star_big_off);
+                imageURL = "http://findicons.com/icon/download/38862/dog/128/png?id=38866";
+                ImageLoader.load(fragment.getActivity(), imageURL, holder.imageView);
                 Log.d(Constants.LOG_TAG, "onBindViewHolder AllTab");
                 break;
             case Constants.TAB_IMAGES:

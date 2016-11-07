@@ -13,11 +13,11 @@ import ua.com.wadyan.expandedminiviwer.adapters.RecyclerViewAdapter;
  * Created by << Wad + >> on 06.09.2016.
  */
 
-public class AsyncTaskAddView extends AsyncTask<Void, Void, Void> {
-    RecyclerViewAdapter adapter;
-    ArrayList<Object> dataSet;
+public class AsyncTaskDeleteView extends AsyncTask<Void, Void, Void> {
+    private RecyclerViewAdapter adapter;
+    private ArrayList<Object> dataSet;
 
-    public AsyncTaskAddView(RecyclerViewAdapter adapter, ArrayList<Object> dataSet) {
+    public AsyncTaskDeleteView(RecyclerViewAdapter adapter, ArrayList<Object> dataSet) {
         this.adapter = adapter;
         this.dataSet = dataSet;
     }
